@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Contact.Api.Service.Interfaces;
-using Contact.API.Data.Repository;
 using Contact.API.Data.Repository.Interfaces;
 using Contact.API.Domain.Dto;
 using Contact.API.Domain.Entities;
+using Domain.Dto;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,11 +15,13 @@ namespace Contact.Api.Service.Services
         private readonly IContactRepository _contactRepository;
         private readonly IDetailRepository _detailRepository;
         private readonly IMapper _mapper;
-        public ContactService(IContactRepository contactRepository, IDetailRepository detailRepository, IMapper mapper)
+        private readonly IReportHttpService _reportHttpService;
+        public ContactService(IContactRepository contactRepository, IDetailRepository detailRepository, IMapper mapper, IReportHttpService reportHttpService)
         {
             _contactRepository = contactRepository;
             _detailRepository = detailRepository;
             _mapper = mapper;
+            _reportHttpService = reportHttpService;
         }
 
         public Task<API.Domain.Entities.Contact> AddContact(ContactDto contact)
@@ -27,12 +29,21 @@ namespace Contact.Api.Service.Services
             return _contactRepository.AddAsync(_mapper.Map<API.Domain.Entities.Contact>(contact));
         }
 
-        public Task<Detail> AddDetail(DetailDto detail, Guid contactId)
+        public async Task<Detail> AddDetail(DetailDto detail, Guid contactId)
         {
             Detail detailEntity = _mapper.Map<Detail>(detail);
             detailEntity.ContactId = contactId;
 
-            return _detailRepository.AddAsync(detailEntity);
+            var addResult = await _detailRepository.AddAsync(detailEntity);
+
+            await _reportHttpService.AddDetail(new DetailNotificationDto
+            {
+                ContactId = contactId,
+                DetailId = addResult.Id,
+                Location = detail.Location
+            });
+
+            return addResult;
         }
 
         public Task DeleteContact(Guid contactId)
@@ -46,7 +57,12 @@ namespace Contact.Api.Service.Services
         {
             var detail = _detailRepository.GetDetailByRefAsync(detailId);
 
-            return _detailRepository.DeleteAsync(detail.Result);
+            var result = _detailRepository.DeleteAsync(detail.Result);
+
+            if (result.Status == TaskStatus.RanToCompletion)
+                _reportHttpService.DeleteDetail(detailId);
+
+            return result;
         }
 
         public Task<List<ContactDto>> GetAllContacts()

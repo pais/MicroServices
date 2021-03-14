@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Net.Http.Headers;
 
 namespace Contact.API
 {
@@ -39,6 +41,13 @@ namespace Contact.API
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IDetailRepository, DetailRepository>();
             services.AddScoped<IContactService, ContactService>();
+
+            string httpServices = Configuration.GetSection("ProductHttpServiceUrl").Value;
+            services.AddHttpClient<IReportHttpService, ReportHttpService>(client =>
+            {
+                client.BaseAddress = new Uri(httpServices);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

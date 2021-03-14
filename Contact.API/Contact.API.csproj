@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Contact.API.Data\Contact.API.Data.csproj" />
     <ProjectReference Include="..\Contact.API.Domain\Contact.API.Domain.csproj" />
     <ProjectReference Include="..\Contact.Api.Service\Contact.Api.Service.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>
