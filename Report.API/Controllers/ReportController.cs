@@ -1,5 +1,7 @@
 ﻿using Domain.Dto;
 using Microsoft.AspNetCore.Mvc;
+using Report.API.Domain.Dto;
+using Report.API.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,36 +14,41 @@ namespace Report.API.Controllers
     [ApiController]
     public class ReportController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IReportService _reportService;
+        public ReportController(IReportService reportService)
         {
-            return new string[] { "value1", "value2" };
+            _reportService = reportService;
+        }
+
+        [HttpGet]
+        public Task<List<ReportDto>> Get()
+        {
+            return _reportService.GetAllReports();
         }
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Task<ReportDetailDto> Get(Guid id)
         {
-            return "value";
+            return _reportService.GetReportDetail(id);
         }
 
 
         [HttpPost]
-        public void Post([FromBody] DetailNotificationDto detailNotification)
+        public async Task Post([FromBody] string location)
         {
+
         }
 
-        //[HttpPost, Route("add-detail")]
-        //public async Task<ActionResult> AddDetail([FromBody] Detail detail, Guid contactId)
-        //{
-        //    var response = await _contactService.AddDetail(detail, contactId);
-        //    return Ok(response);
-        //}
-
+        [HttpPost, Route("add-detail")]
+        public async Task AddDetail([FromBody] DetailNotificationDto detailNotification)
+        {
+            await _reportService.AddDetail(detailNotification);
+        }
 
         [HttpDelete("delete-detail/{id}")]
         public async Task DeleteDetail(Guid id)
         {
-            //await _contactService.DeleteDetail(id);
+            await _reportService.DeleteDetail(id);
         }
 
     }

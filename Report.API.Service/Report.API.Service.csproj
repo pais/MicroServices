@@ -4,4 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Report.API.Data\Report.API.Data.csproj" />
+    <ProjectReference Include="..\Report.API.Domain\Report.API.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

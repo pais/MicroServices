@@ -1,13 +1,12 @@
 ﻿using Domain.Entites;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Report.API.Data.Entites
+namespace Report.API.Domain.Entites
 {
     public class ContactDetail : BaseEntity
     {
         public Guid ContactRef { get; set; }
+        public Guid DetailRef { get; set; }
         public string Location { get; set; }
     }
 }
