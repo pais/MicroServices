@@ -26,23 +26,22 @@ namespace Report.API.Messaging.Sender
             CreateConnection();
         }
 
-        public async Task SendReportRequest(string location)
+        public Task SendReportRequest(string location)
         {
-            await Task.Run(() =>
-             {
-                 if (ConnectionExists())
-                 {
-                     using (var channel = _connection.CreateModel())
-                     {
-                         channel.QueueDeclare(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+            if (ConnectionExists())
+            {
+                using (var channel = _connection.CreateModel())
+                {
+                    channel.QueueDeclare(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
 
-                         var json = JsonConvert.SerializeObject(location);
-                         var body = Encoding.UTF8.GetBytes(json);
+                    var json = JsonConvert.SerializeObject(location);
+                    var body = Encoding.UTF8.GetBytes(json);
 
-                         channel.BasicPublish(exchange: "", routingKey: _queueName, basicProperties: null, body: body);
-                     }
-                 }
-             });
+                    channel.BasicPublish(exchange: "", routingKey: _queueName, basicProperties: null, body: body);
+                }
+            }
+
+            return Task.CompletedTask;
         }
 
         private void CreateConnection()

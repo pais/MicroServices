@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Report.API.Messaging.Options;
 using Report.API.Service.Interfaces;
+using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,13 +23,13 @@ namespace Report.API.Messaging.Receiver
         private readonly string _username;
         private readonly string _password;
 
-        public ReportRequestReceiver(IReportService reportService, IOptions<RabbitMqConfiguration> rabbitMqOptions)
+        public ReportRequestReceiver(IOptions<RabbitMqConfiguration> rabbitMqOptions, IServiceProvider serviceProvider)
         {
             _hostname = rabbitMqOptions.Value.Hostname;
             _queueName = rabbitMqOptions.Value.QueueName;
             _username = rabbitMqOptions.Value.UserName;
             _password = rabbitMqOptions.Value.Password;
-            _reportService = reportService;
+            _reportService = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<IReportService>();
             InitializeRabbitMqListener();
         }
 

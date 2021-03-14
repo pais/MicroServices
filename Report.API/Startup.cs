@@ -6,9 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Report.API.Data;
+using Report.API.Data.Repository;
+using Report.API.Data.Repository.Interfaces;
 using Report.API.Messaging.Options;
 using Report.API.Messaging.Receiver;
 using Report.API.Messaging.Sender;
+using Report.API.Service.Interfaces;
+using Report.API.Service.Services;
 
 namespace Report.API
 {
@@ -30,6 +34,13 @@ namespace Report.API
 
             services.AddDbContext<PostgreSqlReportDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Report.API.Data")));
             services.AddScoped<DbContext>(provider => provider.GetService<PostgreSqlReportDbContext>());
+
+            services.AddScoped<IContactDetailRepository, ContactDetailRepository>();
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IReportService, ReportService>();
+
+            services.AddSingleton<IReportRequestSender, ReportRequestSender>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -40,8 +51,6 @@ namespace Report.API
             {
                 services.AddHostedService<ReportRequestReceiver>();
             }
-
-            services.AddSingleton<IReportRequestSender, ReportRequestSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

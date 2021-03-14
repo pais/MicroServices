@@ -5,7 +5,6 @@ using Report.API.Messaging.Sender;
 using Report.API.Service.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -37,7 +36,7 @@ namespace Report.API.Controllers
 
 
         [HttpPost]
-        public async Task Post([FromBody] string location)
+        public async Task Post(string location)
         {
             await _reportRequestSender.SendReportRequest(location);
         }
