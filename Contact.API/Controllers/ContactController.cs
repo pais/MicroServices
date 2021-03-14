@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Contact.Api.Service.Interfaces;
+using Contact.API.Domain.Dto;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Contact.API.Controllers
 {
@@ -12,36 +11,51 @@ namespace Contact.API.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-        // GET: api/<ContactController>
+        private readonly IContactService _contactService;
+
+        public ContactController(IContactService contactService)
+        {
+            _contactService = contactService;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<List<ContactDto>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return await _contactService.GetAllContacts();
         }
 
-        // GET api/<ContactController>/5
+
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<ContactDetailDto>> Get(Guid id)
         {
-            return "value";
+            return await _contactService.GetContactDetail(id);
         }
 
-        // POST api/<ContactController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] ContactDto contact)
         {
+            var response = await _contactService.AddContact(contact);
+            return Ok(response);
         }
 
-        // PUT api/<ContactController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost, Route("add-detail")]
+        public async Task<ActionResult> PostDetail([FromBody] DetailDto detail, Guid contactId)
         {
+            var response = await _contactService.AddDetail(detail, contactId);
+            return Ok(response);
         }
 
-        // DELETE api/<ContactController>/5
+
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(Guid id)
         {
+            await _contactService.DeleteContact(id);
+        }
+
+        [HttpDelete("delete-detail/{id}")]
+        public async Task DeleteDetail(Guid id)
+        {
+            await _contactService.DeleteDetail(id);
         }
     }
 }
