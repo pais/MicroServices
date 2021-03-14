@@ -21,31 +21,12 @@ namespace Contact.Api.Service.Services
         {
             StringContent stringContent = new StringContent(JsonConvert.SerializeObject(detailNotification), Encoding.UTF8, "application/json");
 
-            try
-            {
-                HttpResponseMessage response = await _client.PostAsync($"report/", stringContent);
-                response.EnsureSuccessStatusCode();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
-
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    response.Content.Dispose();
-            //    return JsonConvert.DeserializeObject<Product>(content);
-            //}
-            //throw new Exception("Product service connection error");
+            await _client.PostAsync($"report/", stringContent);
         }
 
-        public Task DeleteDetail(Guid detailId)
+        public async Task DeleteDetail(Guid detailId)
         {
-            throw new NotImplementedException();
+            await _client.DeleteAsync($"report/{detailId}");
         }
-
-
     }
 }
