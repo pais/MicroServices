@@ -1,6 +1,7 @@
 ﻿using Domain.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Report.API.Domain.Dto;
+using Report.API.Messaging.Sender;
 using Report.API.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,11 @@ namespace Report.API.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IReportService _reportService;
-        public ReportController(IReportService reportService)
+        private readonly IReportRequestSender _reportRequestSender;
+        public ReportController(IReportService reportService, IReportRequestSender reportRequestSender)
         {
             _reportService = reportService;
+            _reportRequestSender = reportRequestSender;
         }
 
         [HttpGet]
@@ -36,7 +39,7 @@ namespace Report.API.Controllers
         [HttpPost]
         public async Task Post([FromBody] string location)
         {
-
+            await _reportRequestSender.SendReportRequest(location);
         }
 
         [HttpPost, Route("add-detail")]

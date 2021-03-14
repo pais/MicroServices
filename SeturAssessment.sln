@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.API.Service", "Repor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.API.Test", "Report.API.Test\Report.API.Test.csproj", "{00E5B683-C821-4CF8-8AF6-0A3F33C4EE4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.API.Messaging", "Report.API.Messaging\Report.API.Messaging.csproj", "{AA0616FD-A8FC-4C1B-9876-99850FB2DDFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{00E5B683-C821-4CF8-8AF6-0A3F33C4EE4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00E5B683-C821-4CF8-8AF6-0A3F33C4EE4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00E5B683-C821-4CF8-8AF6-0A3F33C4EE4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA0616FD-A8FC-4C1B-9876-99850FB2DDFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA0616FD-A8FC-4C1B-9876-99850FB2DDFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA0616FD-A8FC-4C1B-9876-99850FB2DDFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA0616FD-A8FC-4C1B-9876-99850FB2DDFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{78042998-BE9C-48F3-97A7-01754868D9D3} = {E80BBCF5-A657-483E-A527-C237A1956E26}
 		{CBFCAC68-C475-4A77-946E-71043007BFDC} = {E80BBCF5-A657-483E-A527-C237A1956E26}
 		{00E5B683-C821-4CF8-8AF6-0A3F33C4EE4D} = {E80BBCF5-A657-483E-A527-C237A1956E26}
+		{AA0616FD-A8FC-4C1B-9876-99850FB2DDFC} = {E80BBCF5-A657-483E-A527-C237A1956E26}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA3070DF-12BD-4E19-ACC4-C212382C8FE0}

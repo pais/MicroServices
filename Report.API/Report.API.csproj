@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Report.API.Data\Report.API.Data.csproj" />
     <ProjectReference Include="..\Report.API.Domain\Report.API.Domain.csproj" />
+    <ProjectReference Include="..\Report.API.Messaging\Report.API.Messaging.csproj" />
     <ProjectReference Include="..\Report.API.Service\Report.API.Service.csproj" />
   </ItemGroup>
 

@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Report.API.Data;
+using Report.API.Messaging.Options;
+using Report.API.Messaging.Receiver;
+using Report.API.Messaging.Sender;
 
 namespace Report.API
 {
@@ -21,6 +24,10 @@ namespace Report.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var serviceClientSettingsConfig = Configuration.GetSection("RabbitMq");
+            var serviceClientSettings = serviceClientSettingsConfig.Get<RabbitMqConfiguration>();
+            services.Configure<RabbitMqConfiguration>(serviceClientSettingsConfig);
+
             services.AddDbContext<PostgreSqlReportDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Report.API.Data")));
             services.AddScoped<DbContext>(provider => provider.GetService<PostgreSqlReportDbContext>());
             services.AddControllers();
@@ -28,6 +35,13 @@ namespace Report.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Report.API", Version = "v1" });
             });
+
+            if (serviceClientSettings.Enabled)
+            {
+                services.AddHostedService<ReportRequestReceiver>();
+            }
+
+            services.AddSingleton<IReportRequestSender, ReportRequestSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
