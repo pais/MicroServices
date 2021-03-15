@@ -21,12 +21,12 @@ namespace Contact.Api.Service.Services
         {
             StringContent stringContent = new StringContent(JsonConvert.SerializeObject(detailNotification), Encoding.UTF8, "application/json");
 
-            await _client.PostAsync($"report/", stringContent);
+            await _client.PostAsync($"report/add-detail", stringContent);
         }
 
         public async Task DeleteDetail(Guid detailId)
         {
-            await _client.DeleteAsync($"report/{detailId}");
+            await _client.DeleteAsync($"report/delete-detail/{detailId}");
         }
     }
 }
