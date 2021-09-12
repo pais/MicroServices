@@ -1,5 +1,5 @@
 
-https://github.com/pais/SeturAssessment
+https://github.com/pais/MikroServices
 
 
 ## Prerequities
