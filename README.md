@@ -1,5 +1,5 @@
 
-https://github.com/pais/MikroServices
+https://github.com/pais/MicroServices
 
 
 ## Prerequities
