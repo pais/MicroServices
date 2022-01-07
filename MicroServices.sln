@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contact.API", "Contact.API\Contact.API.csproj", "{4076051B-F549-4A50-9530-51750B258180}"
 EndProject
@@ -23,15 +23,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contact.Api.Service", "Cont
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{86C8A88F-A89E-4762-AA1D-57879A961F0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.API.Data", "Report.API.Data\Report.API.Data.csproj", "{E6C8D43F-7156-4384-810B-5B019E86875B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Report.API.Data", "Report.API.Data\Report.API.Data.csproj", "{E6C8D43F-7156-4384-810B-5B019E86875B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.API.Domain", "Report.API.Domain\Report.API.Domain.csproj", "{78042998-BE9C-48F3-97A7-01754868D9D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Report.API.Domain", "Report.API.Domain\Report.API.Domain.csproj", "{78042998-BE9C-48F3-97A7-01754868D9D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.API.Service", "Report.API.Service\Report.API.Service.csproj", "{CBFCAC68-C475-4A77-946E-71043007BFDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Report.API.Service", "Report.API.Service\Report.API.Service.csproj", "{CBFCAC68-C475-4A77-946E-71043007BFDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.API.Test", "Report.API.Test\Report.API.Test.csproj", "{00E5B683-C821-4CF8-8AF6-0A3F33C4EE4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Report.API.Test", "Report.API.Test\Report.API.Test.csproj", "{00E5B683-C821-4CF8-8AF6-0A3F33C4EE4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.API.Messaging", "Report.API.Messaging\Report.API.Messaging.csproj", "{AA0616FD-A8FC-4C1B-9876-99850FB2DDFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Report.API.Messaging", "Report.API.Messaging\Report.API.Messaging.csproj", "{AA0616FD-A8FC-4C1B-9876-99850FB2DDFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
