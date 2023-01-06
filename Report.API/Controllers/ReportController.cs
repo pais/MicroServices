@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-
 namespace Report.API.Controllers
 {
     [Route("api/[controller]")]
@@ -16,6 +15,7 @@ namespace Report.API.Controllers
     {
         private readonly IReportService _reportService;
         private readonly IReportRequestSender _reportRequestSender;
+
         public ReportController(IReportService reportService, IReportRequestSender reportRequestSender)
         {
             _reportService = reportService;
@@ -33,7 +33,6 @@ namespace Report.API.Controllers
         {
             return _reportService.GetReportDetail(id);
         }
-
 
         [HttpPost]
         public async Task Post(string location)
@@ -53,5 +52,10 @@ namespace Report.API.Controllers
             await _reportService.DeleteDetail(id);
         }
 
+        [HttpPost, Route("send-vote")]
+        public async Task SendVote(string Vote)
+        {
+            await _reportRequestSender.SendVote(Vote);
+        }
     }
 }

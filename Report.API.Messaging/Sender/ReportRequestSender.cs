@@ -13,12 +13,14 @@ namespace Report.API.Messaging.Sender
         private readonly string _hostname;
         private readonly string _password;
         private readonly string _queueName;
+        private readonly string _pollingQueueName;
         private readonly string _username;
         private IConnection _connection;
 
         public ReportRequestSender(IOptions<RabbitMqConfiguration> rabbitMqOptions)
         {
             _queueName = rabbitMqOptions.Value.QueueName;
+            _pollingQueueName = rabbitMqOptions.Value.PollingQueueName;
             _hostname = rabbitMqOptions.Value.Hostname;
             _username = rabbitMqOptions.Value.UserName;
             _password = rabbitMqOptions.Value.Password;
@@ -28,20 +30,16 @@ namespace Report.API.Messaging.Sender
 
         public Task SendReportRequest(string location)
         {
-            if (ConnectionExists())
-            {
-                using (var channel = _connection.CreateModel())
-                {
-                    channel.QueueDeclare(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+            var json = JsonConvert.SerializeObject(location);
 
-                    var json = JsonConvert.SerializeObject(location);
-                    var body = Encoding.UTF8.GetBytes(json);
+            return SendToQueue(_queueName, json);
+        }
 
-                    channel.BasicPublish(exchange: "", routingKey: _queueName, basicProperties: null, body: body);
-                }
-            }
+        public Task SendVote(string vote)
+        {
+            var json = JsonConvert.SerializeObject(vote);
 
-            return Task.CompletedTask;
+            return SendToQueue(_pollingQueueName, json);
         }
 
         private void CreateConnection()
@@ -72,6 +70,22 @@ namespace Report.API.Messaging.Sender
             CreateConnection();
 
             return _connection != null;
+        }
+
+        private Task SendToQueue(string queueName, string jsonMessage)
+        {
+            if (ConnectionExists())
+            {
+                using (var channel = _connection.CreateModel())
+                {
+                    channel.QueueDeclare(queue: queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+
+                    var body = Encoding.UTF8.GetBytes(jsonMessage);
+
+                    channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: body);
+                }
+            }
+            return Task.CompletedTask;
         }
     }
 }
