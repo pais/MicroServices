@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Report.Api.Service.Automapper;
 using Report.API.Data;
 using Report.API.Data.Repository;
 using Report.API.Data.Repository.Interfaces;
@@ -38,11 +39,17 @@ namespace Report.API
             services.AddScoped<IContactDetailRepository, ContactDetailRepository>();
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddScoped<IReportService, ReportService>();
+
+            services.AddScoped<IVoteRepository, VoteRepository>();
+            services.AddScoped<ICandidateRepository, CandidateRepository>();
             services.AddScoped<IElectionService, ElectionService>();
 
             services.AddSingleton<IReportRequestSender, ReportRequestSender>();
 
             services.AddControllers();
+
+            services.AddAutoMapper(typeof(MappingProfile));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Report.API", Version = "v1" });

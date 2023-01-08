@@ -4,7 +4,7 @@ namespace Report.API.Domain.Dto
 {
     public class VoteDto
     {
-        public Guid CandidateId { get; set; }
+        public Guid CandidateRef { get; set; }
         public int VoteCount { get; set; }
     }
 }

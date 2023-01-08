@@ -12,5 +12,10 @@ namespace Report.API.Data
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PostgreSqlReportDbContext).Assembly);
         }
+
+        public virtual DbSet<Domain.Entities.Candidate> Candidate { get; set; }
+        public virtual DbSet<Domain.Entities.Vote> Vote { get; set; }
+        public virtual DbSet<Domain.Entities.Report> Report { get; set; }
+        public virtual DbSet<Domain.Entities.ContactDetail> ContactDetails { get; set; }
     }
 }
