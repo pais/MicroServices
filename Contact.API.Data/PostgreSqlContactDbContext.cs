@@ -7,7 +7,6 @@ namespace Contact.API.Data
     {
         public PostgreSqlContactDbContext(DbContextOptions<PostgreSqlContactDbContext> options) : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

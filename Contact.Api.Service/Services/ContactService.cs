@@ -16,6 +16,7 @@ namespace Contact.Api.Service.Services
         private readonly IDetailRepository _detailRepository;
         private readonly IMapper _mapper;
         private readonly IReportHttpService _reportHttpService;
+
         public ContactService(IContactRepository contactRepository, IDetailRepository detailRepository, IMapper mapper, IReportHttpService reportHttpService)
         {
             _contactRepository = contactRepository;

@@ -24,7 +24,6 @@ namespace Contact.API.Controllers
             return await _contactService.GetAllContacts();
         }
 
-
         [HttpGet("{id}")]
         public async Task<ActionResult<ContactDetailDto>> Get(Guid id)
         {
@@ -44,7 +43,6 @@ namespace Contact.API.Controllers
             var response = await _contactService.AddDetail(detail, contactId);
             return Ok(response);
         }
-
 
         [HttpDelete("{id}")]
         public async Task Delete(Guid id)

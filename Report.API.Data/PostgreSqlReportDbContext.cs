@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Report.API.Data
 {
@@ -9,7 +6,6 @@ namespace Report.API.Data
     {
         public PostgreSqlReportDbContext(DbContextOptions<PostgreSqlReportDbContext> options) : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

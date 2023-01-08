@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace Report.API.Test
@@ -8,7 +7,6 @@ namespace Report.API.Test
         [Fact]
         public void Test1()
         {
-
         }
     }
 }

@@ -51,6 +51,5 @@ namespace Report.API.Controllers
         {
             await _reportService.DeleteDetail(id);
         }
-
     }
 }

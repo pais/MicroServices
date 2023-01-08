@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace Contact.API.Data.Repository
 {
     public class ContactRepository : Repository<Domain.Entities.Contact>, IContactRepository
@@ -23,7 +22,5 @@ namespace Contact.API.Data.Repository
         {
             return await contactDbContext.Contact.Where(x => x.IsActive).ToListAsync();
         }
-
-
     }
 }

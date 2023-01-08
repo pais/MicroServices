@@ -5,7 +5,6 @@ using Contact.Api.Service.Services;
 using Contact.API.Data.Repository.Interfaces;
 using Contact.API.Domain.Dto;
 using Moq;
-using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,6 +17,7 @@ namespace Contact.API.Test
         private Mock<IReportHttpService> _reportHttpServiceMoq;
         private IMapper _mapper;
         private IContactService _contactService;
+
         public ContactServiceTest()
         {
             var mapperMoq = new MapperConfiguration(cfg =>
@@ -35,7 +35,6 @@ namespace Contact.API.Test
         [Fact]
         public void ContactService_AddContact_ShouldReturnCreatedContact()
         {
-
             ContactDto contact = new ContactDto
             {
                 Name = "name1",

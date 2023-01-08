@@ -7,6 +7,7 @@ namespace Contact.Api.Service.Interfaces
     public interface IReportHttpService
     {
         Task AddDetail(DetailNotificationDto detailNotification);
+
         Task DeleteDetail(Guid detailId);
     }
 }

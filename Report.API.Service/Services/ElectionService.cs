@@ -10,6 +10,7 @@ namespace Report.API.Service.Services
     {
         private readonly IReportRepository _reportRepository;
         private readonly IContactDetailRepository _contactDetailRepository;
+
         public ElectionService(IReportRepository reportRepository, IContactDetailRepository contactDetailRepository)
         {
             _reportRepository = reportRepository;

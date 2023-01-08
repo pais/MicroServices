@@ -4,8 +4,6 @@ using Report.API.Domain.Dto;
 using Report.API.Service.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Report.API.Service.Services
@@ -14,11 +12,13 @@ namespace Report.API.Service.Services
     {
         private readonly IReportRepository _reportRepository;
         private readonly IContactDetailRepository _contactDetailRepository;
+
         public ReportService(IReportRepository reportRepository, IContactDetailRepository contactDetailRepository)
         {
             _reportRepository = reportRepository;
             _contactDetailRepository = contactDetailRepository;
         }
+
         public Task AddDetail(DetailNotificationDto detail)
         {
             throw new NotImplementedException();

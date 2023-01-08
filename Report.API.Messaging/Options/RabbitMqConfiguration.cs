@@ -12,6 +12,5 @@
 
         public string Password { get; set; }
         public bool Enabled { get; set; }
-
     }
 }
