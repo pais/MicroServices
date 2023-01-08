@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Report.API.Domain.Dto
+﻿namespace Report.API.Domain.Dto
 {
     public class ReportDetailDto
     {

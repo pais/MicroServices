@@ -1,4 +1,4 @@
-﻿using Domain.Entites;
+﻿using Domain.Entities;
 using System.Collections.Generic;
 
 namespace Contact.API.Domain.Entities

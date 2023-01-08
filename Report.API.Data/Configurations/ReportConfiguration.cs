@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Report.API.Domain.Entites;
 
 namespace Report.API.Data.Configurations
 {
-    public class ReportConfiguration : IEntityTypeConfiguration<Domain.Entites.Report>
+    public class ReportConfiguration : IEntityTypeConfiguration<Domain.Entities.Report>
     {
-        public void Configure(EntityTypeBuilder<Domain.Entites.Report> builder)
+        public void Configure(EntityTypeBuilder<Domain.Entities.Report> builder)
         {
             builder.Property(x => x.Location).HasMaxLength(200).IsRequired();
             builder.Property(x => x.PhoneCount).IsRequired();

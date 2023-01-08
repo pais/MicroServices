@@ -1,6 +1,4 @@
-﻿using Report.API.Domain.Entites;
-using System;
-using System.Threading.Tasks;
+﻿using Report.API.Domain.Entities;
 
 namespace Report.API.Data.Repository.Interfaces
 {

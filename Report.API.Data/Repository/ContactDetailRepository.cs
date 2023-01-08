@@ -1,7 +1,5 @@
-﻿using Report.API.Data;
-using Report.API.Data.Repository;
-using Report.API.Data.Repository.Interfaces;
-using Report.API.Domain.Entites;
+﻿using Report.API.Data.Repository.Interfaces;
+using Report.API.Domain.Entities;
 
 namespace Report.API.Data.Repository
 {
@@ -9,7 +7,6 @@ namespace Report.API.Data.Repository
     {
         public ContactDetailRepository(PostgreSqlReportDbContext reportDbContext) : base(reportDbContext)
         {
-
         }
     }
 }

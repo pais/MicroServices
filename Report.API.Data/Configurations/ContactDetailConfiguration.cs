@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Report.API.Domain.Entites;
+using Report.API.Domain.Entities;
 
 namespace Report.API.Data.Configurations
 {

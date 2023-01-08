@@ -1,4 +1,4 @@
-﻿using Domain.Entites;
+﻿using Domain.Entities;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,6 +8,7 @@ namespace Contact.API.Domain.Entities
     {
         [ForeignKey("Contact")]
         public Guid ContactId { get; set; }
+
         public string Content { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }

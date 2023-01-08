@@ -52,10 +52,5 @@ namespace Report.API.Controllers
             await _reportService.DeleteDetail(id);
         }
 
-        [HttpPost, Route("send-vote")]
-        public async Task SendVote(string Vote)
-        {
-            await _reportRequestSender.SendVote(Vote);
-        }
     }
 }

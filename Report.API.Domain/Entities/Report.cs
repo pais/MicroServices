@@ -1,7 +1,7 @@
-﻿using Domain.Entites;
+﻿using Domain.Entities;
 using System;
 
-namespace Report.API.Domain.Entites
+namespace Report.API.Domain.Entities
 {
     public class Report : BaseEntity
     {

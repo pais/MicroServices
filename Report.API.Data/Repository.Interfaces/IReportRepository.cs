@@ -1,10 +1,6 @@
-﻿using Report.API.Domain.Entites;
-using System;
-using System.Threading.Tasks;
-
-namespace Report.API.Data.Repository.Interfaces
+﻿namespace Report.API.Data.Repository.Interfaces
 {
-    public interface IReportRepository : IRepository<Domain.Entites.Report>
+    public interface IReportRepository : IRepository<Domain.Entities.Report>
     {
     }
 }

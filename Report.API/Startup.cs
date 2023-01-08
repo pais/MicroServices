@@ -38,6 +38,7 @@ namespace Report.API
             services.AddScoped<IContactDetailRepository, ContactDetailRepository>();
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IElectionService, ElectionService>();
 
             services.AddSingleton<IReportRequestSender, ReportRequestSender>();
 

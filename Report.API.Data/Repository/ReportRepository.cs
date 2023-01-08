@@ -2,11 +2,10 @@
 
 namespace Report.API.Data.Repository
 {
-    public class ReportRepository : Repository<Domain.Entites.Report>, IReportRepository
+    public class ReportRepository : Repository<Domain.Entities.Report>, IReportRepository
     {
         public ReportRepository(PostgreSqlReportDbContext reportDbContext) : base(reportDbContext)
         {
-
         }
     }
 }
