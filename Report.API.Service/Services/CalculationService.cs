@@ -13,10 +13,8 @@ namespace Report.API.Service.Services
 {
     public class CalculationService : ICalculationService
     {
-        private readonly IMapper _mapper;
         private readonly ICacheProvider _cacheProvider;
-
-        public event EventHandler<VotingEventArgs> OnNewResultsCalculated;
+        private readonly IMapper _mapper;
 
         public CalculationService(IMapper mapper, ICacheProvider cacheProvider)
         {
@@ -24,36 +22,21 @@ namespace Report.API.Service.Services
             _cacheProvider = cacheProvider;
         }
 
+        public event EventHandler<VotingEventArgs> OnNewResultsCalculated;
+
         public async Task AddVoting(VoteCacheDto vote)
         {
             var cache = await _cacheProvider.GetFromCache<ElectionReportDto>(Enums.DistirubedCacheKey.ElectionResult);
 
+            ElectionReportDto electionReport;
+
             if (cache != null)
             {
-
-                cache.DateTime = DateTime.Now;
-
-                var candidateScore = cache.Details.FirstOrDefault(x => x.CandidateId == vote.CandidateRef);
-                if (candidateScore != null)
-                {
-                    candidateScore.VoteCount += vote.VoteCount;
-                }
-                else
-                {
-                    cache.Details.Add(new ElectionReportDetailDto
-                    {
-                        VoteCount = vote.VoteCount,
-                        CandidateId = vote.CandidateRef,
-                        CandidateName = vote.Name
-                    });
-                }
-
-                await _cacheProvider.SetCache(Enums.DistirubedCacheKey.ElectionResult, cache,
-                    new DistributedCacheEntryOptions());
+                electionReport = UpdateCache(cache, vote);
             }
             else
             {
-                var report = new ElectionReportDto
+                electionReport = new ElectionReportDto
                 {
                     DateTime = DateTime.Now,
                     Details = new List<ElectionReportDetailDto>
@@ -66,10 +49,32 @@ namespace Report.API.Service.Services
                         }
                     }
                 };
-
-                await _cacheProvider.SetCache(Enums.DistirubedCacheKey.ElectionResult, report,
-                    new DistributedCacheEntryOptions());
             }
+
+            await _cacheProvider.SetCache(Enums.DistirubedCacheKey.ElectionResult, electionReport,
+                new DistributedCacheEntryOptions());
+        }
+
+        private ElectionReportDto UpdateCache(ElectionReportDto report, VoteCacheDto vote)
+        {
+            report.DateTime = DateTime.Now;
+
+            var candidateScore = report.Details.FirstOrDefault(x => x.CandidateId == vote.CandidateRef);
+            if (candidateScore != null)
+            {
+                candidateScore.VoteCount += vote.VoteCount;
+            }
+            else
+            {
+                report.Details.Add(new ElectionReportDetailDto
+                {
+                    VoteCount = vote.VoteCount,
+                    CandidateId = vote.CandidateRef,
+                    CandidateName = vote.Name
+                });
+            }
+
+            return report;
         }
     }
 }

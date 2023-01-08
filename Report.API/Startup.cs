@@ -5,8 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Report.API.Cache.RedisCache;
 using Report.Api.Service.Automapper;
+using Report.API.Cache.RedisCache;
 using Report.API.Data;
 using Report.API.Data.Repository;
 using Report.API.Data.Repository.Interfaces;
@@ -57,8 +57,7 @@ namespace Report.API
 
             services.AddScoped<IVoteRepository, VoteRepository>();
             services.AddScoped<ICandidateRepository, CandidateRepository>();
-            
-            //services.AddSingleton<IReportRequestSender, ReportRequestSender>();
+
             services.AddSingleton<ICacheProvider, CacheProvider>();
             services.AddSingleton<ICalculationService, CalculationService>();
 

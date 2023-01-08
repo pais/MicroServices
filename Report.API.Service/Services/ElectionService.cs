@@ -4,7 +4,6 @@ using Report.API.Data.Repository.Interfaces;
 using Report.API.Domain.Dto;
 using Report.API.Domain.Entities;
 using Report.API.Service.Interfaces;
-using System;
 using System.Threading.Tasks;
 
 namespace Report.API.Service.Services

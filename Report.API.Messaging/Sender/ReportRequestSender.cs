@@ -1,14 +1,14 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using Report.API.Cache.RedisCache;
 using Report.API.Domain.Dto;
 using Report.API.Messaging.Options;
 using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Report.API.Cache.RedisCache;
-using Microsoft.Extensions.Hosting;
 
 namespace Report.API.Messaging.Sender
 {
