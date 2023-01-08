@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Report.API.Cache\Report.API.Cache.csproj" />
     <ProjectReference Include="..\Report.API.Data\Report.API.Data.csproj" />
     <ProjectReference Include="..\Report.API.Domain\Report.API.Domain.csproj" />
   </ItemGroup>

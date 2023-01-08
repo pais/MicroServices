@@ -1,26 +1,22 @@
 ﻿using AutoMapper;
-using Report.API.Data.Repository.Interfaces;
-using Report.API.Domain.Dto;
-using Report.API.Domain.Entities;
+using Report.API.Cache.RedisCache;
 using Report.API.Domain.EventHandlers;
 using Report.API.Service.Interfaces;
 using System;
-using System.Threading.Tasks;
 
 namespace Report.API.Service.Services
 {
-    public class CalculationService
+    public class CalculationService : ICalculationService
     {
-        private readonly ICandidateRepository _candidateRepository;
-        private readonly IVoteRepository _voteRepository;
         private readonly IMapper _mapper;
+        private readonly ICacheProvider _cacheProvider;
 
-        public CalculationService(ICandidateRepository candidateRepository, IVoteRepository voteRepository)
+        public event EventHandler<VotingEventArgs> OnNewResultsCalculated;
+
+        public CalculationService(IMapper mapper, ICacheProvider cacheProvider)
         {
-            _candidateRepository = candidateRepository;
-            _voteRepository = voteRepository;
+            _mapper = mapper;
+            _cacheProvider = cacheProvider;
         }
-
-
     }
 }

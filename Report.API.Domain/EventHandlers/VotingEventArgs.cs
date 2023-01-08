@@ -5,6 +5,6 @@ namespace Report.API.Domain.EventHandlers
 {
     public class VotingEventArgs : EventArgs
     {
-        public VoteDto Vote { get; set; }
+        public ElectionReportDto report { get; set; }
     }
 }

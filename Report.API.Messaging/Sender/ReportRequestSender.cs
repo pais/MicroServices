@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using Report.API.Domain.Dto;
 using Report.API.Messaging.Options;
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Report.API.Cache.RedisCache;
 
 namespace Report.API.Messaging.Sender
 {
@@ -16,16 +18,26 @@ namespace Report.API.Messaging.Sender
         private readonly string _pollingQueueName;
         private readonly string _username;
         private IConnection _connection;
+        private readonly ICacheProvider _cacheProvider;
 
-        public ReportRequestSender(IOptions<RabbitMqConfiguration> rabbitMqOptions)
+        public ReportRequestSender(IOptions<RabbitMqConfiguration> rabbitMqOptions, ICacheProvider cacheProvider)
         {
             _queueName = rabbitMqOptions.Value.QueueName;
             _pollingQueueName = rabbitMqOptions.Value.PollingQueueName;
             _hostname = rabbitMqOptions.Value.Hostname;
             _username = rabbitMqOptions.Value.UserName;
             _password = rabbitMqOptions.Value.Password;
-
+            _cacheProvider = cacheProvider;
+            _cacheProvider.OnCacheUpdated += _cacheProvider_OnCacheUpdated;
             CreateConnection();
+        }
+
+        private void _cacheProvider_OnCacheUpdated(object sender, Domain.EventHandlers.CacheUpdatedEventargs e)
+        {
+            if (e.UpdatedKey == Enums.DistirubedCacheKey.ElectionResult)
+            {
+                PublishElectionResult(e.Value);
+            }
         }
 
         public Task SendReportRequest(string location)
@@ -35,11 +47,9 @@ namespace Report.API.Messaging.Sender
             return SendToQueue(_queueName, json);
         }
 
-        public Task SendVote(string vote)
+        private void PublishElectionResult(string report)
         {
-            var json = JsonConvert.SerializeObject(vote);
-
-            return SendToQueue(_pollingQueueName, json);
+            SendToQueue(_pollingQueueName, report);
         }
 
         private void CreateConnection()

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Report.API.Cache\Report.API.Cache.csproj" />
     <ProjectReference Include="..\Report.API.Domain\Report.API.Domain.csproj" />
     <ProjectReference Include="..\Report.API.Service\Report.API.Service.csproj" />
   </ItemGroup>

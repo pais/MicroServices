@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Report.API.Cache.RedisCache;
 using Report.Api.Service.Automapper;
 using Report.API.Data;
 using Report.API.Data.Repository;
@@ -42,13 +43,21 @@ namespace Report.API
 
             services.AddScoped<IVoteRepository, VoteRepository>();
             services.AddScoped<ICandidateRepository, CandidateRepository>();
-            services.AddScoped<IElectionService, ElectionService>();
-
+            
             services.AddSingleton<IReportRequestSender, ReportRequestSender>();
+            services.AddSingleton<ICacheProvider, CacheProvider>();
+            services.AddSingleton<ICalculationService, CalculationService>();
+
+            services.AddScoped<IElectionService, ElectionService>();
 
             services.AddControllers();
 
             services.AddAutoMapper(typeof(MappingProfile));
+
+            services.AddStackExchangeRedisCache(action =>
+            {
+                action.Configuration = "127.0.0.1:6379";
+            });
 
             services.AddSwaggerGen(c =>
             {
