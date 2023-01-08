@@ -9,6 +9,7 @@ namespace Report.Api.Service.Automapper
         public MappingProfile()
         {
             CreateMap<VoteDto, Vote>();
+            CreateMap<Vote, VoteDto>();
         }
     }
 }

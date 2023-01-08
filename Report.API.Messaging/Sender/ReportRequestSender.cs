@@ -5,12 +5,14 @@ using Report.API.Domain.Dto;
 using Report.API.Messaging.Options;
 using System;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Report.API.Cache.RedisCache;
+using Microsoft.Extensions.Hosting;
 
 namespace Report.API.Messaging.Sender
 {
-    public class ReportRequestSender : IReportRequestSender
+    public class ReportRequestSender : BackgroundService
     {
         private readonly string _hostname;
         private readonly string _password;
@@ -95,6 +97,11 @@ namespace Report.API.Messaging.Sender
                     channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: body);
                 }
             }
+            return Task.CompletedTask;
+        }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
             return Task.CompletedTask;
         }
     }

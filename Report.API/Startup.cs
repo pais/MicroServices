@@ -37,19 +37,6 @@ namespace Report.API
             services.AddDbContext<PostgreSqlReportDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Report.API.Data")));
             services.AddScoped<DbContext>(provider => provider.GetService<PostgreSqlReportDbContext>());
 
-            services.AddScoped<IContactDetailRepository, ContactDetailRepository>();
-            services.AddScoped<IReportRepository, ReportRepository>();
-            services.AddScoped<IReportService, ReportService>();
-
-            services.AddScoped<IVoteRepository, VoteRepository>();
-            services.AddScoped<ICandidateRepository, CandidateRepository>();
-            
-            services.AddSingleton<IReportRequestSender, ReportRequestSender>();
-            services.AddSingleton<ICacheProvider, CacheProvider>();
-            services.AddSingleton<ICalculationService, CalculationService>();
-
-            services.AddScoped<IElectionService, ElectionService>();
-
             services.AddControllers();
 
             services.AddAutoMapper(typeof(MappingProfile));
@@ -64,9 +51,23 @@ namespace Report.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Report.API", Version = "v1" });
             });
 
+            services.AddScoped<IContactDetailRepository, ContactDetailRepository>();
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IReportService, ReportService>();
+
+            services.AddScoped<IVoteRepository, VoteRepository>();
+            services.AddScoped<ICandidateRepository, CandidateRepository>();
+            
+            //services.AddSingleton<IReportRequestSender, ReportRequestSender>();
+            services.AddSingleton<ICacheProvider, CacheProvider>();
+            services.AddSingleton<ICalculationService, CalculationService>();
+
+            services.AddScoped<IElectionService, ElectionService>();
+
             if (serviceClientSettings.Enabled)
             {
                 services.AddHostedService<ReportRequestReceiver>();
+                services.AddHostedService<ReportRequestSender>();
             }
         }
 

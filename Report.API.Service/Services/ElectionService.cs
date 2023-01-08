@@ -16,42 +16,35 @@ namespace Report.API.Service.Services
         private readonly IMapper _mapper;
         private readonly ICacheProvider _cacheProvider;
         private readonly ICalculationService _calculationService;
-        //private readonly IReportRequestSender _reportRequestSender;
 
         public ElectionService(ICandidateRepository candidateRepository, IVoteRepository voteRepository,
-            ICacheProvider cacheProvider, ICalculationService calculationService)
+            ICacheProvider cacheProvider, ICalculationService calculationService, IMapper mapper)
         {
             _candidateRepository = candidateRepository;
             _voteRepository = voteRepository;
             _cacheProvider = cacheProvider;
             _calculationService = calculationService;
-            _calculationService.OnNewResultsCalculated += _calculationService_OnNewResultsCalculated;
+            _mapper = mapper;
         }
 
-        private void _calculationService_OnNewResultsCalculated(object sender, Domain.EventHandlers.VotingEventArgs e)
+        public async Task AddVote(VoteDto vote)
         {
-            throw new NotImplementedException();
-        }
+            var candidate = await _candidateRepository.GetByRefAsync(vote.CandidateRef);
 
-        private void _calculationService_OnNewResultsArrived(object sender, Domain.EventHandlers.VotingEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+            await _voteRepository.AddAsync(_mapper.Map<Vote>(vote));
 
-        public Task AddVote(VoteDto vote)
-        {
-            _candidateRepository.GetByRefAsync(vote.CandidateRef);
-
-            var addResult = _voteRepository.AddAsync(_mapper.Map<Vote>(vote));
-
-            //if (addResult.Status == TaskStatus.RanToCompletion )
-
-            return addResult;
+            await _calculationService.AddVoting(new VoteCacheDto
+            {
+                CandidateRef = vote.CandidateRef,
+                Name = candidate.Name,
+                VoteCount = vote.VoteCount
+            });
         }
 
         public Task<ElectionReportDto> GetCurrentResult()
         {
-            throw new NotImplementedException();
+            //TODO db check
+            return _cacheProvider.GetFromCache<ElectionReportDto>(Enums.DistirubedCacheKey.ElectionResult);
         }
     }
 }
