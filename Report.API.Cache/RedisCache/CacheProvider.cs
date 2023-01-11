@@ -21,12 +21,15 @@ namespace Report.API.Cache.RedisCache
         public async Task<T> GetFromCache<T>(DistirubedCacheKey key) where T : class
         {
             var cachedUsers = await _cache.GetStringAsync(key.ToString());
-            return cachedUsers == null ? null : JsonSerializer.Deserialize<T>(cachedUsers);
+            return cachedUsers == null ? null : JsonSerializer.Deserialize<T>(cachedUsers,
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         }
 
         public async Task SetCache<T>(DistirubedCacheKey key, T value, DistributedCacheEntryOptions options) where T : class
         {
-            var serilazedValue = JsonSerializer.Serialize(value);
+            var serilazedValue = JsonSerializer.Serialize(value,
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+
             await _cache.SetStringAsync(key.ToString(), serilazedValue, options);
 
             if (OnCacheUpdated != null)

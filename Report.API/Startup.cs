@@ -68,6 +68,13 @@ namespace Report.API
                 services.AddHostedService<ReportRequestReceiver>();
                 services.AddHostedService<ReportRequestSender>();
             }
+
+            services.AddCors(o => o.AddPolicy("AllowAnyOrigins", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +90,8 @@ namespace Report.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AllowAnyOrigins");
 
             app.UseAuthorization();
 
