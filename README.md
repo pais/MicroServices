@@ -10,6 +10,8 @@ https://github.com/pais/MicroServices
 
 * RabbitMQ
 
+* Redis
+
 
 ## Running in Debug Mode
 
