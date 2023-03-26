@@ -10,12 +10,14 @@ https://github.com/pais/MicroServices
 
 * RabbitMQ
 
+* Redis
+
 
 ## Running in Debug Mode
 
 * Run 'Update-Database' for Contact.API.Data and Report.API.Data
 
-* Wait all services to up and running. ( rabbitmq, postgres)
+* Wait all services to up and running. ( rabbitmq, postgres, redis)
 
 * Select Contact.API and Report.API start debuging.
 
