@@ -43,7 +43,7 @@ namespace Report.API
 
             services.AddStackExchangeRedisCache(action =>
             {
-                action.Configuration = "127.0.0.1:6379";
+                action.Configuration = Configuration.GetValue<string>("Redis:Configuration");
             });
 
             services.AddSwaggerGen(c =>
